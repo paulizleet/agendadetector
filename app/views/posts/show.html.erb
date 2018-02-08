@@ -1,0 +1,18 @@
+<section id="main">
+  <h3><%=@posts[0].text%></h3>
+  <div class="post-table">
+    <div class="table-row">
+      <% @posts.each do |post| %>
+      <div class="table-cell">
+        <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#q#{post.post_num}"%>
+        <a href="<%=link%>"> <%= link %> </a>
+      </div>
+      <div class="table-cell">
+        <%= DateTime.strptime(post.post_timestamp, "%s") %>
+      </div>
+
+      <%end%>
+    </div>
+  </div>
+
+</section>

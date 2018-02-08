@@ -1,0 +1,21 @@
+<div >
+  <div id="post-table">
+    <div class="table-row">
+      <div class="table-header">Occurrences</div>
+      <div class="table-header">Post</div>
+    </div>
+
+    <% @top_posts.each do |tp| %>
+    <div class="table-row">
+
+      <div class="occurrences-cell"><%= tp.length %></div>
+      <div class="post-text-cell"><a href="/posts/<%=tp[0].post_num%>"><%=tp[0].text%></a></div>
+    </div>
+    <%end%>
+  </div>
+  <form id="new-tokens-form" action="/posts/new" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+    <br>
+    <input type="submit" value="Get new set of threads">
+  </form>
+</div>

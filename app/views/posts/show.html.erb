@@ -1,10 +1,12 @@
 <section id="main">
-  <h3><%=@posts[0].text%></h3>
+  <div class="post-data">
+    <%= @posts[0].text.html_safe %>
+  </div>
   <div class="post-table">
     <div class="table-row">
       <% @posts.each do |post| %>
       <div class="table-cell">
-        <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#q#{post.post_num}"%>
+        <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#p#{post.post_num}"%>
         <a href="<%=link%>"> <%= link %> </a>
       </div>
       <div class="table-cell">

@@ -47,6 +47,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -55,8 +56,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Wrapper for 4chan's api
 gem 'fourchan-kit'
 
-# Required for running get_threads every 60 seconds
-gem 'whenever', require: false
+# job queue handler
+gem 'delayed_job_active_record'
+
 
 #Fast hash function for lookups
 gem 'xxhash'

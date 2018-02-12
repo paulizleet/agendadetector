@@ -59,6 +59,9 @@ gem 'fourchan-kit'
 # job queue handler
 gem 'delayed_job_active_record'
 
+# Job runner
+gem 'daemon'
+
 
 #Fast hash function for lookups
 gem 'xxhash'

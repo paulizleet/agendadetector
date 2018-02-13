@@ -37,9 +37,10 @@ class PostFetchingWorker
       #The OP is not included when fetching replies - so add it to the list
       reps.insert(0, t)
       reps.each do |r|
-        next if Post.exists?(post_num: r.no) && any_text?(r.com)
+        cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).strip
+        next if Post.exists?(post_num: r.no) && cleaned != ""
         @post = Post.new(
-            text_hash: XXhash.xxh32(r.com),
+            text_hash: XXhash.xxh32(cleaned),
             board: board,
             op: r.resto != 0 ? r.resto : r.no,
             post_num: r.no,

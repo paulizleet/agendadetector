@@ -56,12 +56,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Wrapper for 4chan's api
 gem 'fourchan-kit'
 
+# For automatically queueing jobs
+gem 'whenever'
+
 # job queue handler
 gem 'delayed_job_active_record'
 
 # Job runner
 gem 'daemon'
-
 
 #Fast hash function for lookups
 gem 'xxhash'

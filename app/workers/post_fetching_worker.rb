@@ -23,7 +23,7 @@ class PostFetchingWorker
   end
 
   #gets all currently active threads and catalogs the posts
-  def perform_without_delay(board)
+  def perform(board)
     puts "Fetching Posts"
     b = Fourchan::Kit::Board.new board
     threads = b.threads(1)
@@ -52,7 +52,7 @@ class PostFetchingWorker
       end
     end
   end
-  handle_asynchronously :perform_without_delay
+  handle_asynchronously :perform
 
 
   private

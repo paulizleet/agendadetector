@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def new_threads
-    @asdf = PostFetchingWorker.new.perform_without_delay("pol")
+    @asdf = PostFetchingWorker.new.perform("pol")
     @top_posts = get_top_posts("pol")
 
     render :index

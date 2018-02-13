@@ -3,6 +3,5 @@ Rails.application.routes.draw do
   resources :posts
 
   get '/posts/:index', to: "posts#show"
-  post '/posts/:new_threads', to: "posts#new_threads"
   root 'posts#index'
 end

@@ -1,20 +1,24 @@
 <section id="main">
-  <div class="post-data">
+  <div id="post-data">
     <%= @posts[0].text.html_safe %>
   </div>
-  <div class="post-table">
-    <div class="table-row">
-      <% @posts.each do |post| %>
-      <div class="table-cell">
-        <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#p#{post.post_num}"%>
-        <a href="<%=link%>"> <%= link %> </a>
-      </div>
-      <div class="table-cell">
-        <%= DateTime.strptime(post.post_timestamp, "%s") %>
-      </div>
+  <div id="post-table">
 
-      <%end%>
-    </div>
+    <% @posts.each do |post| %>
+      <div class="table-row">
+        <div class="table-cell">
+            <%= post.text.html_safe %>
+        </div>
+        <div class="table-cell">
+          <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#p#{post.post_num}"%>
+          <a href="<%=link%>"> <%= "Link" %> </a>
+        </div>
+        <div class="table-cell">
+          <%= DateTime.strptime(post.post_timestamp, "%s") %>
+        </div>
+      </div>
+    <%end%>
+
   </div>
 
 </section>

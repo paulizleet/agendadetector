@@ -20,7 +20,7 @@ class ThreadPruningWorker
   end
 
   #removes threads and posts which are no longer active
-  def perform(board)
+  def prune_posts(board)
     tracked_threads = {}
     Post.select(:op).distinct.where(board: board).each{|e| tracked_threads.merge!({e.op => false})}
     current_threads = Fourchan::Kit::Board.new(board).all_threads
@@ -32,11 +32,11 @@ class ThreadPruningWorker
       old_posts.each do |o|
         old_counter = PostCounter.find_by(text_hash: o.text_hash)
         old_counter[:occurrences] -= 1
-        old_counter[:occurrences] > 0 ? old_counter.save :old_counter.destroy
+        old_counter[:occurrences] > 0 ? old_counter.save : old_counter.destroy
       end
       old_posts.destroy_all
     end
   end
-  handle_asynchronously :purge_old_posts
+  #handle_asynchronously :purge_old_posts
 
 end

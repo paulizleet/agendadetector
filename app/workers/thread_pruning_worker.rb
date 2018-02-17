@@ -1,26 +1,10 @@
 class ThreadPruningWorker
 
 
-  def enqueue
-    puts "--------------"
-    puts "Queued thread pruner"
-    puts "--------------"
-  end
-
-  def success
-    puts "--------------"
-    puts "Thread Pruner finished succesfully"
-    puts "--------------"
-  end
-
-  def failure
-    puts "--------------"
-    puts "Thread Pruner failed"
-    puts "--------------"
-  end
-
   #removes threads and posts which are no longer active
   def prune_posts(board)
+    now = Time.now
+    puts "Pruning Posts at #{now}"
     tracked_threads = {}
     Post.select(:op).distinct.where(board: board).each{|e| tracked_threads.merge!({e.op => false})}
     current_threads = Fourchan::Kit::Board.new(board).all_threads
@@ -36,6 +20,8 @@ class ThreadPruningWorker
       end
       old_posts.destroy_all
     end
+    puts "Finished pruning post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
+
   end
   #handle_asynchronously :purge_old_posts
 

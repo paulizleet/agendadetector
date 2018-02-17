@@ -22,7 +22,6 @@ ENV['RAILS_ENV'] = "#{@pre_set_variables[:environment]}"
 set :output, 'log/whenever.log'
 
 every 30.minutes do
-  runner 'PostFetchingWorker.new.get_posts("pol")', :environment => :development
-  runner 'ThreadPruningWorker.new.prune_posts("pol")', :environment => :development
+  runner 'MasterWorker.new.start_workers("pol")', :environment => :development
   #rake jobs:work
 end

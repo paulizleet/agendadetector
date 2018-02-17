@@ -1,27 +1,4 @@
 class PostFetchingWorker
-  def enqueue
-    puts "--------------"
-    puts "Queued post fetcher"
-    puts "--------------"
-  end
-  def before
-    puts "--------------"
-    puts "beginning post fetcher"
-    puts "--------------"
-  end
-
-  def success
-    puts "--------------"
-    puts "Post fetcher finished succesfully"
-    puts "--------------"
-  end
-
-  def failure
-    puts "--------------"
-    puts "post fetcher failed"
-    puts "--------------"
-  end
-
   #gets all currently active threads and catalogs the posts
   def get_posts(board)
     now = Time.now

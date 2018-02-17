@@ -18,8 +18,11 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+ENV['RAILS_ENV'] = "#{@pre_set_variables[:environment]}"
+set :output, 'log/whenever.log'
 
-every 10.minutes do
-  runner 'PostFetchingWorker.new.perform("pol")'
-  runner 'ThreadMaintainanceWorker.new.purge_old_posts("pol")'
+every 30.minutes do
+  runner 'PostFetchingWorker.new.get_posts("pol")', :environment => :development
+  runner 'ThreadPruningWorker.new.prune_posts("pol")', :environment => :development
+  #rake jobs:work
 end

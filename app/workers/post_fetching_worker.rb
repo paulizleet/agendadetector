@@ -23,12 +23,12 @@ class PostFetchingWorker
   end
 
   #gets all currently active threads and catalogs the posts
-  def perform(board)
-    puts "Fetching Posts"
+  def get_posts(board)
+    now = Time.now
+    puts "Fetching Posts at #{now}"
     b = Fourchan::Kit::Board.new board
-    threads = b.threads(1)
+    threads = b.all_threads
     threads.each do |t|
-
       begin
         reps = Fourchan::Kit::Thread.new(board, t.no).fetch_replies
       rescue
@@ -37,10 +37,20 @@ class PostFetchingWorker
       #The OP is not included when fetching replies - so add it to the list
       reps.insert(0, t)
       reps.each do |r|
-        cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).strip
-        next if Post.exists?(post_num: r.no) && cleaned != ""
+
+        #skip if we're already watching this post
+        next if Post.exists?(post_num: r.no)
+
+        #roots out image only replies
+        next if r.com.nil?
+
+        #remove all reply links.  This will leave all replies that are actually saying something
+        text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "")
+        next if text_minus_replies == ""
+
+        cleaned = ActionView::Base.full_sanitizer.sanitize(text_minus_replies)
         @post = Post.new(
-            text_hash: XXhash.xxh32(cleaned),
+            text_hash: XXhash.xxh32(cleaned.downcase),
             board: board,
             op: r.resto != 0 ? r.resto : r.no,
             post_num: r.no,
@@ -52,30 +62,9 @@ class PostFetchingWorker
         @post.increment
       end
     end
-  end
-  handle_asynchronously :perform
+    puts "Finished fetching post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
 
-
-  private
-  def any_text?(text)
-    return false if text.nil?
-    #test to see if it's just a (you)
-    stripped = text.strip
-    stack = []
-    i=0
-    while i < stripped.length
-      i+=1
-      case stripped[i]
-      when "<"
-        stack.push(true)
-      when ">"
-        stack.pop
-      else
-        nil
-      end
-      return true if i > stripped.length
-    end
-    false
   end
+  #handle_asynchronously :perform
 
 end

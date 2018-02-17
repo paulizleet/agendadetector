@@ -2,25 +2,16 @@ require 'pry'
 class PostsController < ApplicationController
   def index
     @top_posts = get_top_posts("pol")
-
     render :index
   end
 
   def show
-      @posts = Post.where(post_num: params[:id])
+    p params
+
+    @posts = Post.where(text_hash: Post.find_by(post_num: params[:id]).text_hash)
+    render :show
   end
 
-  def new_threads
-    @asdf = PostFetchingWorker.new.perform("pol")
-    @top_posts = get_top_posts("pol")
-
-    render :index
-  end
-
-  def prune
-    ThreadMaintainanceWorker.new.purge_old_posts("pol")
-    redirect_to '/'
-  end
 
   private
 

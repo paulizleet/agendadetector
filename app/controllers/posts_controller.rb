@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   end
 
   def get_top_posts(board)
-    top_hashes = PostCounter.order('occurrences DESC').limit(20)
+    top_hashes = PostCounter.order('occurrences DESC').limit(50)
     top_posts = []
     top_hashes.each do |h|
       top_posts << Post.where(text_hash: h.text_hash)

@@ -1,8 +1,7 @@
 class PostFetchingWorker
   #gets all currently active threads and catalogs the posts
   def get_posts(board)
-    now = Time.now
-    puts "Fetching Posts at #{now}"
+
     b = Fourchan::Kit::Board.new board
     threads = b.all_threads
     threads.each do |t|
@@ -39,7 +38,6 @@ class PostFetchingWorker
         @post.increment
       end
     end
-    puts "Finished fetching post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
 
   end
   #handle_asynchronously :perform

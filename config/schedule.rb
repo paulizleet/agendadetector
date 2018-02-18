@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 ENV['RAILS_ENV'] = "#{@pre_set_variables[:environment]}"
-set :output, 'log/whenever.log'
+set :output, {:error => 'log/errors.log', :standard => 'log/whenever.log'}
 
 every 30.minutes do
   runner 'MasterWorker.new.start_workers("pol")', :environment => :development

@@ -8,7 +8,7 @@
     <% @top_posts.each do |tp| %>
     <div class="table-row">
 
-      <div class="occurrences-cell"><%= tp.length %></div>
+      <div class="occurrences-cell"><%= tp.count %></div>
       <div class="post-text-cell"><a href="/posts/<%=tp[0].post_num%>">
         <%=ActionView::Base.full_sanitizer.sanitize(tp[0].text.gsub(/<a.*&gt;&gt;.*\/a>/, ""), {tags:%w(br)}).html_safe%></a>
       </div>

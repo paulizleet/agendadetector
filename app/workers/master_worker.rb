@@ -18,3 +18,4 @@ class MasterWorker
   end
 
 end
+  

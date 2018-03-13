@@ -1,18 +1,19 @@
+
 <div >
-  <div id="post-table">
-    <div class="table-row">
-      <div class="table-header">Occurrences</div>
-      <div class="table-header">Post</div>
-    </div>
+  <table class="table">
+    <tr>
+      <th>Occurrences</th>
+      <td>Post Text</td>
+    </tr>
 
     <% @top_posts.each do |tp| %>
-    <div class="table-row">
+    <tr>
 
-      <div class="occurrences-cell"><%= tp.count %></div>
-      <div class="post-text-cell"><a href="/posts/<%=tp[0].post_num%>">
+      <td><%= tp.count %></td>
+      <td><a href="/posts/<%=tp[0].post_num%>">
         <%=ActionView::Base.full_sanitizer.sanitize(tp[0].text.gsub(/<a.*&gt;&gt;.*\/a>/, ""), {tags:%w(br)}).html_safe%></a>
-      </div>
-    </div>
+      </td>
+    </tr>
     <%end%>
-  </div>
+  </table>
 </div>

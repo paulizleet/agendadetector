@@ -20,11 +20,15 @@ class PostFetchingWorker
         #roots out image only replies
         next if r.com.nil?
 
+        #root out shitty one-word posts
+
         #remove all reply links.  This will leave all replies that are actually saying something
         text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "")
+
         next if text_minus_replies == ""
 
-        cleaned = ActionView::Base.full_sanitizer.sanitize(text_minus_replies)
+        cleaned = ActionView::Base.full_sanitizer.sanitize(text_minus_replies).gsub(/[[:punct:]]/, "")
+
         @post = Post.new(
             text_hash: XXhash.xxh32(cleaned.downcase),
             board: board,
@@ -40,6 +44,5 @@ class PostFetchingWorker
     end
 
   end
-  #handle_asynchronously :perform
 
 end

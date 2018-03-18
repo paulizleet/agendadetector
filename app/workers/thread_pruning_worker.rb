@@ -16,6 +16,7 @@ class ThreadPruningWorker
       old_posts = Post.where(op: k)
       old_posts.each do |o|
         #p o
+        o.archive
         old_counter = PostCounter.find_by(text_hash: o.text_hash)
         next if old_counter.nil?
         old_counter[:occurrences] -= 1

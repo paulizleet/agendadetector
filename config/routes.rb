@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :posts
 
   get '/posts/:index', to: "posts#show"
+  get 'greatest', to: "posts#greatest"
   root 'posts#index'
 end

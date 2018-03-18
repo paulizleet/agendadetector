@@ -2,13 +2,13 @@ class Post < ApplicationRecord
 
   belongs_to :post_counter, required: false
   def increment
-    @counter = PostCounter.find_by
+    @counter = PostCounter.find_by(text_hash: self.text_hash)
     if @counter == nil
-      PostCounter.new(text_hash: self.text_hash, occurrences: 1).save
+      PostCounter.new(text_hash: self.text_hash, occurrences: 1)
     else
       @counter.occurrences+=1
-      @counter.save
     end
+    @counter.save
 
   end
 
@@ -28,7 +28,6 @@ class Post < ApplicationRecord
       ArchiveCounter.new(text_hash: self.text_hash, occurrences: 1).save
     else
       @arc_counter.occurrences + 1
-      @arc_counter.save
     end
     @arc.save
 

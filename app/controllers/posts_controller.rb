@@ -1,7 +1,8 @@
 require 'pry'
 class PostsController < ApplicationController
   def index
-    @top_posts = get_top_posts("pol")
+    @board = "pol"
+    @top_posts = get_top_posts(@board)
     render :index
   end
 
@@ -20,7 +21,7 @@ class PostsController < ApplicationController
   end
 
   def get_top_posts(board)
-    top_hashes = PostCounter.order('occurrences DESC').limit(50)
+    top_hashes = PostCounter.order('occurrences DESC').limit(200)
     top_posts = []
     top_hashes.each do |h|
       top_posts << Post.where(text_hash: h.text_hash)

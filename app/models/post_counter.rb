@@ -1,3 +1,3 @@
 class PostCounter < ApplicationRecord
-  has_many :posts
+  belongs_to :chan_board
 end

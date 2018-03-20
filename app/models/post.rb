@@ -1,10 +1,11 @@
 class Post < ApplicationRecord
+  belongs_to :chan_board
+  belongs_to :chan_thread
 
-  belongs_to :post_counter, required: false
   def increment
     @counter = PostCounter.find_by(text_hash: self.text_hash)
     if @counter == nil
-      PostCounter.new(text_hash: self.text_hash, occurrences: 1)
+      @counter = PostCounter.new(text_hash: self.text_hash, occurrences: 1)
     else
       @counter.occurrences+=1
     end

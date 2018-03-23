@@ -16,6 +16,7 @@ class CreateChanThreads < ActiveRecord::Migration[5.0]
 
     create_table :posts do |t|
       t.belongs_to :chan_thread, index: true
+      t.string :chan_board_id
       t.string :text_hash
       t.string :post_num
       t.string :poster_id
@@ -25,7 +26,8 @@ class CreateChanThreads < ActiveRecord::Migration[5.0]
     end
 
     create_table :post_counters do |t|
-      t.bigint :text_hash
+      t.string :chan_board_id
+      t.string :text_hash
       t.integer :occurrences
       t.timestamps
     end

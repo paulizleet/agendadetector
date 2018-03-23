@@ -5,24 +5,20 @@ class ChanThread < ApplicationRecord
     def update_posts
       replies = Fourchan::Kit::Thread.new(self.chan_board.board_id, self.op).posts
       replies.each do |r|
-        p r
-        p self.posts.where(post_num: r.no).empty?
-
         if self.posts.where(post_num: r.no).empty?
           new_post(r)
         end
       end
-
     end
+
     private
     def new_post(r)
-      p r
-      text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
-      # return if text_minus_replies == ""
 
+      text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
       cleaned = ActionView::Base.full_sanitizer.sanitize(r.com)#.gsub(/[[:punct:]]/, "")
       r.com.nil? ? cleaned = "" : nil
       @post = self.posts.new(
+          chan_board_id: self.chan_board_id,
           text_hash: XXhash.xxh32(cleaned.downcase),
           post_num: r.no,
           poster_id: r.id,
@@ -30,7 +26,6 @@ class ChanThread < ApplicationRecord
           post_timestamp: r.time
         )
       @post.save
-      puts "post saved"
       @post.increment
     end
 end

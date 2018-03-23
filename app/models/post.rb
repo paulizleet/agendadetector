@@ -6,7 +6,10 @@ class Post < ApplicationRecord
   def increment
     @counter = PostCounter.find_by(text_hash: self.text_hash)
     if @counter == nil
-      @counter = PostCounter.new(text_hash: self.text_hash, occurrences: 1)
+      @counter = PostCounter.new(
+          chan_board_id: self.chan_board_id,
+          text_hash: self.text_hash,
+          occurrences: 1)
     else
       @counter.occurrences+=1
     end
@@ -18,7 +21,7 @@ class Post < ApplicationRecord
 
     @arc = Archive.new(
       text_hash: self.text_hash,
-      board: self.board,
+      chan_board_id: self.board,
       op: self.op,
       post_num: self.post_num,
       poster_id: self.poster_id,

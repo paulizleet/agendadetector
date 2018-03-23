@@ -26,15 +26,17 @@ ActiveRecord::Schema.define(version: 20180320151615) do
   end
 
   create_table "post_counters", force: :cascade do |t|
-    t.bigint   "text_hash"
+    t.string   "chan_board_id"
+    t.string   "text_hash"
     t.integer  "occurrences"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "posts", force: :cascade do |t|
     t.integer  "chan_thread_id"
-    t.bigint   "text_hash"
+    t.string   "chan_board_id"
+    t.string   "text_hash"
     t.string   "post_num"
     t.string   "poster_id"
     t.string   "text"

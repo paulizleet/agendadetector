@@ -10,56 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318150339) do
+ActiveRecord::Schema.define(version: 20180320151615) do
 
-  create_table "archive_counters", force: :cascade do |t|
-    t.text     "text_hash"
-    t.integer  "occurrences"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "archives", force: :cascade do |t|
-    t.string   "text_hash"
-    t.string   "board"
-    t.string   "op"
-    t.string   "post_num"
-    t.string   "poster_id"
-    t.string   "text"
-    t.string   "post_timestamp"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "boards", force: :cascade do |t|
+  create_table "chan_boards", force: :cascade do |t|
     t.string "board_id"
     t.string "board_name"
   end
 
-  create_table "memes", force: :cascade do |t|
-    t.string   "text_hash"
-    t.string   "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "chan_threads", force: :cascade do |t|
+    t.integer  "chan_board_id"
+    t.string   "op"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["chan_board_id"], name: "index_chan_threads_on_chan_board_id"
   end
 
   create_table "post_counters", force: :cascade do |t|
-    t.text     "text_hash"
+    t.string   "chan_board_id"
+    t.string   "text_hash"
     t.integer  "occurrences"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "posts", force: :cascade do |t|
+    t.integer  "chan_thread_id"
+    t.string   "chan_board_id"
     t.string   "text_hash"
-    t.string   "board"
-    t.string   "op"
     t.string   "post_num"
     t.string   "poster_id"
     t.string   "text"
     t.string   "post_timestamp"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["chan_thread_id"], name: "index_posts_on_chan_thread_id"
   end
 
 end

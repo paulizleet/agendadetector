@@ -9,14 +9,14 @@ class CreateChanThreads < ActiveRecord::Migration[5.0]
 
 
     create_table :chan_threads do |t|
-
+      t.belongs_to :chan_board, index: true
       t.string :op
-      t.string :board_id
       t.timestamps
     end
 
     create_table :posts do |t|
-      t.bigint :text_hash
+      t.belongs_to :chan_thread, index: true
+      t.string :text_hash
       t.string :post_num
       t.string :poster_id
       t.string :text

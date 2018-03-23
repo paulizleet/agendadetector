@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
-  belongs_to :chan_board
   belongs_to :chan_thread
+  #belongs_to :chan_board#, through: :chan_thread
+
 
   def increment
     @counter = PostCounter.find_by(text_hash: self.text_hash)
@@ -26,11 +27,13 @@ class Post < ApplicationRecord
     )
     @arc_counter = ArchiveCounter.find_by(text_hash: self.text_hash)
     if @arc_counter == nil
-      ArchiveCounter.new(text_hash: self.text_hash, occurrences: 1).save
+      ArchiveCounter.new(text_hash: self.text_hash, occurrences: 1)
     else
       @arc_counter.occurrences + 1
     end
-    @arc.save
 
+
+    @arc.save
+    @arc_counter.save
   end
 end

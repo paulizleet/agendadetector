@@ -1,10 +1,10 @@
 class MasterWorker
 
-  def start_workers(board)
+  def start_workers
 
     now = Time.now
     puts "Fetching Posts at #{now}"
-    PostFetchingWorker.new.get_posts(board)
+    ChanBoard.all.each {|b| b.update_threads}
     puts "Finished fetching post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
 
 

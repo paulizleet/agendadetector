@@ -4,7 +4,7 @@ class Post < ApplicationRecord
 
 
   def increment
-    @counter = PostCounter.find_by(text_hash: self.text_hash)
+    @counter = PostCounter.find_by(chan_board_id: self.chan_board_id, text_hash: self.text_hash)
     if @counter == nil
       @counter = PostCounter.new(
           chan_board_id: self.chan_board_id,
@@ -16,6 +16,14 @@ class Post < ApplicationRecord
     @counter.save
 
   end
+
+  def decrement
+    @counter = PostCounter.find_by(chan_board_id: self.chan_board_id, text_hash: self.text_hash)
+    @counter.occurrences-=1
+    @counter.save
+
+  end
+
 
   def archive
 

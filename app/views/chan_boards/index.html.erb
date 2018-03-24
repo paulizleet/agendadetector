@@ -1,0 +1,16 @@
+<div class="">
+
+  <table>
+    <tr>
+      <th>Board</th>
+      <th># Posts</th>
+    </tr>
+    <% @boards.each do |b| %>
+    <tr>
+      <td><%= link_to "#{b.board_id} - #{b.board_name}", b %></td>
+      <td><%= "#{b.posts.count}" %>
+    </tr>
+    <% end %>
+  </table>
+
+</div>

@@ -15,6 +15,7 @@ class PostsController < ApplicationController
 
   def show
     p params
+    @board = ChanBoard.find(params[:chan_board_id])
     begin
       @posts = Post.where(text_hash: Post.find_by(post_num: params[:id]).text_hash)
     rescue

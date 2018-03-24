@@ -1,5 +1,5 @@
 <div >
-  <h1>  /<%=@board%>/ </h1>
+  <h1>  /<%=@board.board_id%>/ </h1>
   <table class="table">
     <tr>
       <th>Occurrences</th>
@@ -8,11 +8,12 @@
 
     <% @top_posts.each do |tp| %>
     <tr>
+      <% next if tp[0].text.nil? || tp[0].text.strip == "" %>
       <% sanitized = ActionView::Base.full_sanitizer.sanitize(tp[0].text.gsub(/<a.*&gt;&gt;.*\/a>/, ""), {tags:%w(br)}).html_safe%>
       <% #next if sanitized.split.length <=3%>
 
       <td><%= tp.count %></td>
-      <td><a href="/posts/<%=tp[0].post_num%>">
+      <td><a href="/chan_boards/<%= "#{@board.id}" %>/posts/<%=tp[0].post_num%>">
         <%=sanitized%></a>
       </td>
     </tr>

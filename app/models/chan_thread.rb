@@ -15,7 +15,7 @@ class ChanThread < ApplicationRecord
     def new_post(r)
 
       text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
-      cleaned = ActionView::Base.full_sanitizer.sanitize(r.com)#.gsub(/[[:punct:]]/, "")
+      cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
       r.com.nil? ? cleaned = "" : nil
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,

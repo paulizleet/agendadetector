@@ -11,12 +11,23 @@ class ChanThread < ApplicationRecord
       end
     end
 
+    def archive
+      arc = ArchiveThread.new(chan_board_id: self.chan_board_id, op: self.op)
+      self.posts.each do |post|
+          post.decrement
+          arc.new_post(post)
+          post.destroy
+      end
+      self.destroy
+      arc.save
+    end
+
     private
     def new_post(r)
 
+      r.com.nil? ? r.com = "" : nil
       text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
       cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
-      r.com.nil? ? cleaned = "" : nil
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,
           text_hash: XXhash.xxh32(cleaned.downcase),

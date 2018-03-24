@@ -1,2 +1,0 @@
-class ArchiveCounter < ApplicationRecord
-end

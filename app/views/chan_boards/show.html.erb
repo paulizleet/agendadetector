@@ -8,9 +8,9 @@
 
     <% @top_posts.each do |tp| %>
     <tr>
-      <% next if tp[0].text.nil? || tp[0].text.strip == "" %>
+      <% next if tp[0].nil? || tp[0].text.nil? || tp[0].text.strip == "" %>
       <% sanitized = ActionView::Base.full_sanitizer.sanitize(tp[0].text.gsub(/<a.*&gt;&gt;.*\/a>/, ""), {tags:%w(br)}).html_safe%>
-      <% #next if sanitized.split.length <=3%>
+      <% next if sanitized.split.length <=1%>
 
       <td><%= tp.count %></td>
       <td><a href="/chan_boards/<%= "#{@board.id}" %>/posts/<%=tp[0].post_num%>">

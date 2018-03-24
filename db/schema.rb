@@ -10,7 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320151615) do
+ActiveRecord::Schema.define(version: 20180324162511) do
+
+  create_table "archive_counters", force: :cascade do |t|
+    t.string   "chan_board_id"
+    t.string   "text_hash"
+    t.integer  "occurrences"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["chan_board_id"], name: "index_archive_counters_on_chan_board_id"
+  end
+
+  create_table "archive_posts", force: :cascade do |t|
+    t.integer  "archive_thread_id"
+    t.string   "chan_board_id"
+    t.string   "text_hash"
+    t.string   "post_num"
+    t.string   "poster_id"
+    t.string   "text"
+    t.string   "post_timestamp"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["archive_thread_id"], name: "index_archive_posts_on_archive_thread_id"
+  end
+
+  create_table "archive_threads", force: :cascade do |t|
+    t.integer  "chan_board_id"
+    t.string   "op"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["chan_board_id"], name: "index_archive_threads_on_chan_board_id"
+  end
 
   create_table "chan_boards", force: :cascade do |t|
     t.string "board_id"

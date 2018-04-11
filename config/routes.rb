@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   resources :chan_boards do
     resources :chan_threads, shallow: true
     resources :posts
-  end
 
+  end
   # get '/posts/:index', to: "posts#show"
   # get 'greatest', to: "posts#greatest"
   # root 'posts#index'
   root 'chan_boards#index'
+  get '*unmatched_route', to: 'chan_boards#index'
+
 end

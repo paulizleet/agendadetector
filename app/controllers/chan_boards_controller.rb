@@ -7,8 +7,11 @@ class ChanBoardsController < ApplicationController
   end
 
   def show
-
-    @board = ChanBoard.find(params["id"])
+    begin
+      @board = ChanBoard.find(params["id"])
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to :index
+    end
     @top_posts = get_top_posts(@board)
 
     render :show
@@ -26,4 +29,6 @@ class ChanBoardsController < ApplicationController
     end
     top_posts
   end
+
+
 end

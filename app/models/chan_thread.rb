@@ -12,14 +12,18 @@ class ChanThread < ApplicationRecord
     end
 
     def archive
-      arc = ArchiveThread.new(chan_board_id: self.chan_board_id, op: self.op)
+      @arc = ArchiveThread.new(chan_board_id: self.chan_board_id, op: self.op)
       self.posts.each do |post|
+        begin
           post.decrement
-          arc.new_post(post)
+          @arc.new_post(post)
           post.destroy
+        rescue
+          nil
+        end
       end
       self.destroy
-      arc.save
+      @arc.save
     end
 
     private

@@ -10,6 +10,15 @@ class ArchiveThread < ApplicationRecord
         text: post.text,
         post_timestamp: post.post_timestamp
       )
+
+    @arc_counter = ArchiveCounter.find_by(text_hash: @post.text_hash)
+    if @arc_counter == nil
+      @arc_counter = ArchiveCounter.new(text_hash: @post.text_hash, occurrences: 1)
+    else
+      @arc_counter.occurrences + 1
+    end
+
+    @arc_counter.save
     @post.save
     @post.increment
   end

@@ -19,7 +19,7 @@ class ChanBoard < ApplicationRecord
         @thread.update_posts
         @thread.save
       rescue
-        pass
+        nil
       end
     end
   end

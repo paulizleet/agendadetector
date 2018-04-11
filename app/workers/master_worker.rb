@@ -1,6 +1,6 @@
 class MasterWorker
 
-  def start_workers
+  def self.start_workers
 
 
     ChanBoard.all.each do |b|
@@ -13,7 +13,6 @@ class MasterWorker
      end
 
 
-    GreatestHitsWorker.new.gather_top_100(board)
 
     #now = Time.now
     #puts "Pruning Posts at #{now}"

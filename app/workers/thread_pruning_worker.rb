@@ -11,6 +11,7 @@ class ThreadPruningWorker
     tracked_threads.each_key do |k|
       #binding.pry
       #p k
+
       next if tracked_threads[k] == true
 
       old_posts = Post.where(op: k)

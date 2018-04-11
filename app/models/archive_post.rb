@@ -1,8 +1,5 @@
-class Post < ApplicationRecord
-  belongs_to :chan_thread
-  #belongs_to :chan_board#, through: :chan_thread
-
-
+class ArchivePost < ApplicationRecord
+  belongs_to :archive_thread
   def increment
     @counter = PostCounter.find_by(chan_board_id: self.chan_board_id, text_hash: self.text_hash)
     if @counter == nil
@@ -15,15 +12,5 @@ class Post < ApplicationRecord
     end
     @counter.save
 
-  end
-
-  def decrement
-    @counter = PostCounter.find_by(chan_board_id: self.chan_board_id, text_hash: self.text_hash)
-    @counter.occurrences-=1
-    if @counter.occurrences == 0
-      @counter.destroy
-    else
-      @counter.save
-    end
   end
 end

@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   # get '/posts/:index', to: "posts#show"
   # get 'greatest', to: "posts#greatest"
   # root 'posts#index'
-  root 'boards#index'
+  root 'chan_boards#index'
 end

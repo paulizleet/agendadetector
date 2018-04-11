@@ -13,15 +13,18 @@
     </tr>
     <% if !@posts.nil? %>
       <% @posts.each do |post| %>
+      <% thread_op = ChanThread.find(post.chan_thread_id).op %>
+
         <tr>
           <td>
-            <%= post.op %>
+
+            <%= thread_op %>
           </td>
           <td>
             <%= post.text.html_safe %>
           </td>
           <td>
-            <% link = "http://boards.4chan.org/#{post.board}/thread/#{post.op}#p#{post.post_num}"%>
+            <% link = "http://boards.4chan.org/#{@board.board_id}/thread/#{thread_op}#p#{post.post_num}"%>
             <a href="<%=link%>"> <%= "Link" %> </a>
           </td>
           <td>

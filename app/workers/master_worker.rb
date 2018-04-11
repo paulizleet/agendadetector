@@ -1,19 +1,23 @@
 class MasterWorker
 
-  def start_workers(board)
-
-    now = Time.now
-    puts "Fetching Posts at #{now}"
-    PostFetchingWorker.new.get_posts(board)
-    puts "Finished fetching post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
+  def self.start_workers
 
 
-    GreatestHitsWorker.new.gather_top_100(board)
+    ChanBoard.all.each do |b|
+      now = Time.now
+      puts "Starting to update #{b.board_id} at #{now}"
+      b.update_threads
+      b.archive_threads
+      puts "Finished updating #{b.board_id} at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
 
-    now = Time.now
-    puts "Pruning Posts at #{now}"
-    ThreadPruningWorker.new.prune_posts(board)
-    puts "Finished pruning post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
+     end
+
+
+
+    #now = Time.now
+    #puts "Pruning Posts at #{now}"
+    #ThreadPruningWorker.new.prune_posts(board)
+    #puts "Finished pruning post at #{Time.now}\nDuration: #{Time.now - now}\n\nThere are currently #{Post.count} tracked posts"
 
   end
 

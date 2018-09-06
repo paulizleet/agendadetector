@@ -8,6 +8,7 @@
     <tr>
       <th>OP</th>
       <th>Post Text</th>
+      <th>Poster ID</th>
       <th>Link</th>
       <th>Time Posted</th>
     </tr>
@@ -24,7 +25,9 @@
             <%= post.text.html_safe %>
           </td>
           <td>
-            <% link = "http://boards.4chan.org/#{@board.board_id}/thread/#{thread_op}#p#{post.post_num}"%>
+            <%= post.poster_id %>
+          <td>
+            <% link = "http://boards.4chan.org/#{@board.board_id}/thread/#{thread_op}#p#{post.post_num}" %>
             <a href="<%=link%>"> <%= "Link" %> </a>
           </td>
           <td>

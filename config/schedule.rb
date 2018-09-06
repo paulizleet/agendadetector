@@ -22,6 +22,6 @@ ENV['RAILS_ENV'] = "#{@pre_set_variables[:environment]}"
 set :output, {:error => 'log/errors.log', :standard => 'log/whenever.log'}
 
 every 30.minutes do
-  runner 'MasterWorker.new.start_workers', :environment => :development
+  runner 'MasterWorker.start_workers', :environment => :development
   #rake jobs:work
 end

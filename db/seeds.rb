@@ -9,7 +9,7 @@
 #Board.new(board_id: 'his', board_name: 'History & Humanities').save
 ChanBoard.new(board_id: 'pol', board_name: 'Politically Incorrect').save
 # Board.new(board_id: 'vg', board_name: 'Video Game Generals').save
-# Board.new(board_id: 'v', board_name: 'Video Games').save
+ChanBoard.new(board_id: 'v', board_name: 'Video Games').save
 
 
 #add meme table so they aren't displayed in top posts

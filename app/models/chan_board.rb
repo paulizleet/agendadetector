@@ -40,10 +40,13 @@ class ChanBoard < ApplicationRecord
 
     tracked_threads.each_pair do |k, v|
       next if v
-
-      thread = self.chan_threads.find_by(op: k)
-      thread.archive
-      thread.destroy
+      begin
+        thread = self.chan_threads.find_by(op: k)
+        thread.archive
+        thread.destroy
+      rescue
+        puts "Thread #{k} already deleted"
+      end
 
     end
   end

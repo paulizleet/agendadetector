@@ -23,10 +23,16 @@ class ChanBoardsController < ApplicationController
   def get_top_posts(board)
     p board
     top_hashes = board.post_counters.order('occurrences DESC').limit(200)
+    
     top_posts = []
     top_hashes.each do |h|
-      top_posts << board.posts.where(text_hash: h.text_hash)
+      top_hash = board.posts.where(text_hash: h.text_hash)
+      next if top_hash.length <= 1
+
+      top_posts << top_hash
     end
+
+    top_posts.each {|e| e.each {|post| p post}}
     top_posts
   end
 

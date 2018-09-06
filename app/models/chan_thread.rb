@@ -5,6 +5,7 @@ class ChanThread < ApplicationRecord
     def update_posts
       replies = Fourchan::Kit::Thread.new(self.chan_board.board_id, self.op).posts
       replies.each do |r|
+        next if r.com.nil?
         if self.posts.where(post_num: r.no).empty?
           new_post(r)
         end
@@ -37,7 +38,7 @@ class ChanThread < ApplicationRecord
           text_hash: XXhash.xxh32(cleaned.downcase),
           post_num: r.no,
           poster_id: r.id,
-          text: r.com.nil? ? "" : r.com,
+          text: r.com,
           post_timestamp: r.time
         )
       @post.save

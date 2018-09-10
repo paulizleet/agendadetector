@@ -21,11 +21,16 @@ class PostsController < ApplicationController
     rescue
       @posts = nil
     end
-    begin
-      @archived = Archive.where(text_hash: Archive.find_by(post_num: params[:id]).text_hash)
-    rescue
-      @archived = nil
-    end
+
+    # begin
+    #   @posts = Archive.where(text_hash: Archive.find_by(post_num: params[:id]).text_hash)
+    # rescue
+    #   @posts = nil
+    # end
+
+    @show_flags = !@posts.first.nat_flag.nil?
+    @show_ids = !@posts.first.poster_id.nil?
+
     render :show
   end
 

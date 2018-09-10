@@ -38,10 +38,19 @@ class ChanThread < ApplicationRecord
           text_hash: XXhash.xxh32(cleaned.downcase),
           post_num: r.no,
           poster_id: r.id,
+          nat_flag: get_flag(r),
           text: r.com,
           post_timestamp: r.time
         )
       @post.save
       @post.increment
     end
+
+    def get_flag(r)
+      return r.country if !r.country.nil?
+      return "troll/#{r.troll_country}" if !r.troll_country.nil?
+      nil
+    end
+
+
 end

@@ -32,7 +32,7 @@ class ChanThread < ApplicationRecord
 
       r.com.nil? ? r.com = "" : nil
       text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
-      cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
+      cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "").unicode_normalize
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,
           text_hash: XXhash.xxh32(cleaned.downcase),

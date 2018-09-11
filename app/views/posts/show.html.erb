@@ -7,6 +7,7 @@
 
     <tr>
       <th>OP</th>
+      <th>Post No.</th>
       <th>Post Text</th>
       <% if @show_flags%>
         <th>Poster Flag</th>
@@ -27,6 +28,9 @@
           <td>
 
           <%= thread_op %>
+          </td>
+          <td>
+            <%= post.post_num %>
           </td>
           <td>
               <%= post.text.html_safe %>

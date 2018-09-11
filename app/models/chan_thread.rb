@@ -38,7 +38,7 @@ class ChanThread < ApplicationRecord
 
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,
-          text_hash: XXhash.xxh32(cleaned.downcase),
+          text_hash: XXhash.xxh32(cleaned.downcase), #only use the normalized version for hashing purposes
           post_num: r.no,
           poster_id: r.id,
           nat_flag: get_flag(r),

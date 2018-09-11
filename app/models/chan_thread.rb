@@ -34,7 +34,7 @@ class ChanThread < ApplicationRecord
       text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
 
       cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
-      cleaned.unicode_normalize!(:nfkd) #decomposes and recomposes unicode characters to eliminate homoglyphs as much as possible
+      cleaned.unicode_normalize!(:nfkc) #decomposes and recomposes unicode characters to single code points to eliminate homoglyphs as much as possible
 
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,

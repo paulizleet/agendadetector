@@ -23,24 +23,25 @@
       <% @posts.each do |post| %>
       <% thread_op = ChanThread.find(post.chan_thread_id).op %>
 
-        <tr>
+        <tr class="post-text-display">
           <td>
 
-            <%= thread_op %>
+          <%= thread_op %>
           </td>
           <td>
-            <%= post.text.html_safe %>
+              <%= post.text.html_safe %>
           </td>
-           <% if @show_flags%>
+
+          <% if @show_flags%>
             <td>
-             <% image_tag("//s.4cdn.org/image/country/#{post.nat_flag}.gif", alt=post.nat_flag) %>
-            <td>
+                <%= image_tag("https://s.4cdn.org/image/country/#{post.nat_flag.downcase}.gif", alt:post.nat_flag) %>
+            </td>
           <%end%>
 
           <% if @show_ids%>
             <td>
               <%= post.poster_id %>
-            <td>
+            </td>
           <%end%>
 
           <td>

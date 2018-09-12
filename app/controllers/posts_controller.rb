@@ -1,17 +1,7 @@
 require 'pry'
 class PostsController < ApplicationController
 
-  def greatest
-    @board = "pol"
-    @top_posts = get_top_archived_posts(@board)
-    render :index
-  end
 
-  def index
-    @board = "pol"
-    @top_posts = get_top_posts(@board)
-    render :index
-  end
 
   def show
     p params
@@ -49,13 +39,5 @@ class PostsController < ApplicationController
     top_posts
   end
 
-  def get_top_archived_posts(board)
-    top_hashes = ArchiveCounter.order('occurrences DESC').limit(200)
-    top_hashes.each { |r| p r}
-    top_posts = []
-    top_hashes.each do |h|
-      top_posts << Archive.where(text_hash: h.text_hash)
-    end
-    top_posts
-  end
+
 end

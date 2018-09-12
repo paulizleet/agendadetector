@@ -1,14 +1,22 @@
 <section id="main">
   <div id="post-data">
-    <%= @posts.nil? ? @archived[0].text.html_safe : @posts[0].text.html_safe %>
+    <%= @posts[0].text.html_safe %>
   </div>
   <table class="table">
 
 
     <tr>
       <th>OP</th>
+      <th>Post No.</th>
       <th>Post Text</th>
-      <th>Poster ID</th>
+      <% if @show_flags%>
+        <th>Poster Flag</th>
+      <%end%>
+
+      <% if @show_ids%>
+        <th>Poster ID</th>
+      <%end%>
+
       <th>Link</th>
       <th>Time Posted</th>
     </tr>
@@ -16,16 +24,30 @@
       <% @posts.each do |post| %>
       <% thread_op = ChanThread.find(post.chan_thread_id).op %>
 
-        <tr>
+        <tr class="post-text-display">
           <td>
 
-            <%= thread_op %>
+          <%= thread_op %>
           </td>
           <td>
-            <%= post.text.html_safe %>
+            <%= post.post_num == thread_op ? "OP" : post.post_num %>
           </td>
           <td>
-            <%= post.poster_id %>
+              <%= post.text.html_safe %>
+          </td>
+
+          <% if @show_flags%>
+            <td>
+                <%= image_tag("https://s.4cdn.org/image/country/#{post.nat_flag.downcase}.gif", alt:post.nat_flag) %>
+            </td>
+          <%end%>
+
+          <% if @show_ids%>
+            <td>
+              <%= post.poster_id %>
+            </td>
+          <%end%>
+
           <td>
             <% link = "http://boards.4chan.org/#{@board.board_id}/thread/#{thread_op}#p#{post.post_num}" %>
             <a href="<%=link%>"> <%= "Link" %> </a>

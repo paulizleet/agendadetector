@@ -20,6 +20,7 @@ class CreateChanThreads < ActiveRecord::Migration[5.0]
       t.string :text_hash
       t.string :post_num
       t.string :poster_id
+      t.string :nat_flag
       t.string :text
       t.string :post_timestamp
       t.timestamps

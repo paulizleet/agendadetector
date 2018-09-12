@@ -1,19 +1,25 @@
-<div class="navbar navbar-default">
-
-  <div class="navbar-header">
-    <a class="navbar-brand"href="/">Home</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Boards
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <% ChanBoard.all.each do |board| %>
+              <%= link_to "#{board.board_id} - #{board.board_name}", board, class: "dropdown-item" %>
+            <%end%>
+        </div>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Greatest Hits", :greatest, class: "nav-link"%>
+      </li>
+    </ul>
   </div>
-  <a href="/greatest">Greatest Hits</a>
-  <ul class="nav navbar-nav navbar-left">
-    <li class='dropdown'>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-          <li> <a href="boards/his">History & Humanities </a> </li>
-          <li> <a href="boards/pol">Politically Incorrect</a> </li>
-          <li> <a href="boards/v"> Video Games </a> </li>
-          <li> <a href="boards/vg"> Video Game Generals </a> </li>
-      </ul>
-    </li>
-  </ul>
-
-</div>
+</nav>

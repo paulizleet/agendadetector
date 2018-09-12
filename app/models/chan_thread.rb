@@ -32,16 +32,28 @@ class ChanThread < ApplicationRecord
 
       r.com.nil? ? r.com = "" : nil
       text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
+
       cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
+      cleaned.unicode_normalize!(:nfkc) #decomposes and recomposes unicode characters to single code points to eliminate homoglyphs as much as possible
+
       @post = self.posts.new(
           chan_board_id: self.chan_board_id,
-          text_hash: XXhash.xxh32(cleaned.downcase),
+          text_hash: XXhash.xxh32(cleaned.downcase), #only use the normalized version for hashing purposes
           post_num: r.no,
           poster_id: r.id,
+          nat_flag: get_flag(r),
           text: r.com,
           post_timestamp: r.time
         )
       @post.save
       @post.increment
     end
+
+    def get_flag(r)
+      return r.country if !r.country.nil?
+      return "troll/#{r.troll_country}" if !r.troll_country.nil?
+      nil
+    end
+
+
 end

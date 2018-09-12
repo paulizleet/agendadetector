@@ -64,3 +64,7 @@ gem 'daemon'
 
 #Fast hash function for lookups
 gem 'xxhash'
+
+gem 'bootstrap'
+
+gem 'jquery-rails'

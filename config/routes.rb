@@ -3,7 +3,14 @@ Rails.application.routes.draw do
   #resources :posts
   resources :chan_boards do
     resources :chan_threads, shallow: true
-    resources :posts
+    resources :posts, only: :show
+
+  end
+
+  get 'greatest', to: 'archive_posts#index'
+  get 'greatest/:id', to: 'archive_posts#show_board'
+  
+  resources :posts do
 
   end
   # get '/posts/:index', to: "posts#show"

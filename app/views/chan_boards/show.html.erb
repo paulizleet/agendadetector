@@ -1,5 +1,15 @@
+<% 
+
+begin 
+  @greatest
+rescue
+  @greatest = false
+end
+%>
+
 <div >
-  <h1>  /<%=@board.board_id%>/ </h1>
+
+  <h1>  /<%=@board.board_id%>/ - <%= @board.board_name %> <%= @greatest ? " - Greatest Hits" : ""%> </h1>
   <table class="table">
     <tr>
       <th>Occurrences</th>
@@ -10,7 +20,7 @@
     <tr>
       <% next if tp[0].nil? || tp[0].text.nil? || tp[0].text.strip == "" %>
       <% sanitized = ActionView::Base.full_sanitizer.sanitize(tp[0].text.gsub(/<a.*&gt;&gt;.*\/a>/, ""), {tags:%w(br)}).html_safe%>
-      <% next if sanitized.split.length <=1%>
+      <% next if sanitized.split.length <=0%>
 
       <td><%= tp.count %></td>
       <td><a href="/chan_boards/<%= "#{@board.id}" %>/posts/<%=tp[0].post_num%>">

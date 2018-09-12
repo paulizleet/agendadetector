@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324162511) do
+ActiveRecord::Schema.define(version: 20180912170248) do
 
   create_table "archive_counters", force: :cascade do |t|
     t.string   "chan_board_id"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20180324162511) do
     t.index ["chan_board_id"], name: "index_chan_threads_on_chan_board_id"
   end
 
+  create_table "nat_flags", force: :cascade do |t|
+    t.string   "flag_id"
+    t.string   "flag_name"
+    t.boolean  "troll"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "post_counters", force: :cascade do |t|
     t.string   "chan_board_id"
     t.string   "text_hash"
@@ -69,6 +77,7 @@ ActiveRecord::Schema.define(version: 20180324162511) do
     t.string   "text_hash"
     t.string   "post_num"
     t.string   "poster_id"
+    t.string   "nat_flag"
     t.string   "text"
     t.string   "post_timestamp"
     t.datetime "created_at",     null: false

@@ -1,2 +1,0 @@
-class ArchiveController < ApplicationController
-end

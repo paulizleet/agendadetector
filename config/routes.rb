@@ -7,10 +7,11 @@ Rails.application.routes.draw do
 
   end
 
+  get 'greatest', to: 'archive_posts#index'
+  get 'greatest/:id', to: 'archive_posts#show_board'
+  
   resources :posts do
-    collection do
-      get 'greatest', to: "posts#greatest"
-    end
+
   end
   # get '/posts/:index', to: "posts#show"
   # get 'greatest', to: "posts#greatest"

@@ -8,8 +8,8 @@ class ChanBoard < ApplicationRecord
 
   def update_threads
     threads = Fourchan::Kit::Board.new(board_id).all_threads
-
-    threads.each do |t|
+    
+     threads.each do |t|
       begin
         @thread = self.chan_threads.find_by(op:t.no)
         if @thread.nil?

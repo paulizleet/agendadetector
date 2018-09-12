@@ -13,7 +13,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <% ChanBoard.all.each do |board| %>
-              <%= link_to "#{board.id} - #{board.board_name}", board, class: "dropdown-item" %>
+              <%= link_to "#{board.board_id} - #{board.board_name}", board, class: "dropdown-item" %>
             <%end%>
         </div>
       </li>

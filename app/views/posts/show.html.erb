@@ -30,7 +30,7 @@
           <%= thread_op %>
           </td>
           <td>
-            <%= post.post_num %>
+            <%= post.post_num == thread_op ? "OP" : post.post_num %>
           </td>
           <td>
               <%= post.text.html_safe %>

@@ -1,5 +1,12 @@
+<% begin 
+  @greatest
+rescue
+  @greatest = false
+  end
+  %>
 <div >
-  <h1>  /<%=@board.board_id%>/ </h1>
+
+  <h1>  /<%=@board.board_id%>/ <%= @greatest ? " - Greatest Hits" : ""%> </h1>
   <table class="table">
     <tr>
       <th>Occurrences</th>

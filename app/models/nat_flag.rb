@@ -1,0 +1,2 @@
+class NatFlag < ApplicationRecord
+end

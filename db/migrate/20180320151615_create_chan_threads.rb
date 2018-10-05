@@ -1,4 +1,4 @@
-class CreateChanThreads < ActiveRecord::Migration[5.0]
+class CreateChanThreads
   def change
 
     create_table :chan_boards do |t|

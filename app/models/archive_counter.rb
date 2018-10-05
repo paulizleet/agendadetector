@@ -1,2 +1,3 @@
-class ArchiveCounter < ApplicationRecord
+class ArchiveCounter
+    include MongoMapper::Document
 end

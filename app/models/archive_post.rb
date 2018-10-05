@@ -1,4 +1,12 @@
-class ArchivePost < ApplicationRecord
+class ArchivePost 
+  include MongoMapper::Document
+
+  key :text_hash
+  key :post_num
+  key :poster_id
+  key :text
+  key :post_timestamp
+
   belongs_to :archive_thread
   def increment
     @counter = PostCounter.find_by(chan_board_id: self.chan_board_id, text_hash: self.text_hash)

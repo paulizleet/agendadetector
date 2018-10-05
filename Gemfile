@@ -71,6 +71,11 @@ gem 'jquery-rails'
 
 gem 'activerecord-import'
 
-gem 'mongo_mapper'
 
+#Stuff required for MongoDB
+
+gem 'mongo', "=1.8"
+gem 'activemodel-serializers-xml'
+gem 'active_model_serializers'
+gem 'mongo_mapper', "~>0.14.0"
 gem 'bson_ext'

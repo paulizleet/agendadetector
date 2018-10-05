@@ -1,4 +1,14 @@
-class Post < ApplicationRecord
+class Post
+  include MongoMapper::EmbeddedDocument
+
+  key :board_id
+  key :text_hash, String
+  key :post_num, String
+  key :poster_id, String
+  key :nat_flag, String
+  key :text, String
+  key :post_timestamp, String
+  
   belongs_to :chan_thread
   #belongs_to :chan_board#, through: :chan_thread
 

@@ -1,26 +1,38 @@
-class ChanBoard < ApplicationRecord
-   has_many :chan_threads
-  has_many :archive_threads
-  has_many :post_counters
-  has_many :archive_counters
-  has_many :posts, through: :chan_threads
-  has_many :archive_posts, through: :archive_threads
+require 'pry'
+class ChanBoard
+  include MongoMapper::Document
+
+  key :board_id, String
+  key :board_name, String
+
+
+  many :chan_threads
+  many :archive_threads
+
+  many :post_counters
+  many :archive_counters
+
+  many :posts, through: :chan_threads
+  many :archive_posts, through: :archive_threads
 
   def update_threads
     threads = Fourchan::Kit::Board.new(board_id).all_threads
+
+    #p threads[0]
     
 
     threads_to_add = []
 
      threads.each do |t|
-        @thread = self.chan_threads.find_by(op:t.no)
-        if @thread.nil?
-          @thread = self.chan_threads.new(op: t.no)
-          @thread.update_posts
-          threads_to_add << @thread
-        end
+        #@thread = self.thread_ids.find(op:t.no)
+        @thread = ChanThread.find_or_create_by_board_id_and_op(self.board_id, t.no.to_s)
+        @thread.update_posts
+        @thread.save
+
     end
-    ChanThread.import(threads_to_add, options={recursive: true})
+
+
+    #ChanThread.import(threads_to_add, options={recursive: true})
 
   end
 

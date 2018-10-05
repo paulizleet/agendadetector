@@ -1,31 +1,41 @@
-class ChanThread < ApplicationRecord
-    belongs_to :chan_board
-    has_many :posts
+require 'pry'
+class ChanThread
+  include MongoMapper::EmbeddedDocument
+    
+    key :op, String
+    #belongs_to :chan_board
+    
+
+
+    many :posts, :in => :post_ids
 
     def update_posts
-      replies = Fourchan::Kit::Thread.new(self.chan_board.board_id, self.op).posts
-      replies_to_add = []
-      replies.each do |r|
-        next if r.com.nil?
-        if self.posts.find_by(post_num: r.no).nil?
 
-          r.com.nil? ? r.com = "" : nil
-          text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
-    
-          #cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
-          cleaned = r.com.unicode_normalize!(:nfkc) #decomposes and recomposes unicode characters to single code points to eliminate homoglyphs as much as possible
-    
-          post = self.posts.new(chan_board_id: self.chan_board_id,
-                          text_hash: XXhash.xxh32(cleaned.downcase), #only use the normalized version for hashing purposes
-                          post_num: r.no,
-                          poster_id: r.id,
-                          nat_flag: get_flag(r),
-                          text: r.com,
-                          post_timestamp: r.time)
-          replies_to_add << post
-        end
+        replies = Fourchan::Kit::Thread.new(self.board_id, self.op).posts
+        replies_to_add = []
+        replies.each do |r|
+          next if r.com.nil?
+          if self.posts.find_by_post_num(r.no).nil?
+
+            r.com.nil? ? r.com = "" : nil
+            text_minus_replies = r.com.gsub(/<a.*&gt;&gt;.*\/a>/, "") unless r.com.nil?
+      
+            #cleaned = ActionView::Base.full_sanitizer.sanitize(r.com).gsub(/[[:punct:]]/, "")
+            cleaned = r.com.unicode_normalize!(:nfkc) #decomposes and recomposes unicode characters to single code points to eliminate homoglyphs as much as possible
+            binding.pry
+            @post = self.posts.new(chan_board_id: self.chan_board_id,
+                            text_hash: XXhash.xxh32(cleaned.downcase), #only use the normalized version for hashing purposes
+                            post_num: r.no,
+                            poster_id: r.id,
+                            nat_flag: get_flag(r),
+                            text: r.com,
+                            post_timestamp: r.time)
+            @post.save
+            @post.increment
+          end
+ 
       end
-      Post.import(replies_to_add)
+      #Post.import(replies_to_add)
 
     end
 

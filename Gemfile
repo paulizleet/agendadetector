@@ -68,3 +68,9 @@ gem 'xxhash'
 gem 'bootstrap'
 
 gem 'jquery-rails'
+
+gem 'activerecord-import'
+
+gem 'mongo_mapper'
+
+gem 'bson_ext'
